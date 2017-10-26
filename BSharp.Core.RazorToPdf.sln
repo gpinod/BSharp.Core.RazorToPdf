@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bsharp.Core.RazorToPdf", "Bsharp.Core.RazorToPdf\Bsharp.Core.RazorToPdf.csproj", "{294D2314-38D6-46F6-BEDC-418EBB9FBCE0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{577AF376-ECD2-443D-9018-90C42A39F177}"
+	ProjectSection(SolutionItems) = preProject
+		BC1.jpg = BC1.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_45|Any CPU = Debug_45|Any CPU
