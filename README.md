@@ -56,4 +56,4 @@ transformEngine.TransformFromFileAndSave(templatePath, "Example4", model, target
 ```
 ## Temporary files
 
-Please review the RazorEngine documentation [here](https://github.com/Antaris/RazorEngine), for more details.
+Please review the RazorEngine documentation [here](https://github.com/Antaris/RazorEngine#temporary-files), for more details.
