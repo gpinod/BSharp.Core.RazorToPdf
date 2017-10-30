@@ -20,7 +20,7 @@ This is an alternative use when the source template is a physical file. This sav
 ```csharp
 using BSharp.Core.RazorToPdf;
 
-string content = "&lt;h3&gt;Hi, @Model.Name&lt;/h3&gt";
+string content = "<h3>Hi, @Model.Name</h3>";
 var model = new { Name = "John Smith" };
 ITransformEngine transformEngine = new TransformEngine();
 byte[]  bytes = transformEngine.Transform(content, "Example1", model);
@@ -38,7 +38,7 @@ byte[]  bytes = transformEngine.TransformFromFile(templatePath, "Example2", mode
 ```csharp
 using BSharp.Core.RazorToPdf;
 
-string content = "&lt;h3&gt;Hi, @Model.Name&lt;/h3&gt";
+string content = "<h3>Hi, @Model.Name</h3>";
 var model = new { Name = "John Smith" };
 string targetPath = @"C:\Demo.pdf";
 ITransformEngine transformEngine = new TransformEngine();
