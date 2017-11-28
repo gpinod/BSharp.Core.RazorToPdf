@@ -413,7 +413,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base64ImageTransform.cs" />
+    <Compile Include="ImageTransform.cs" />
     <Compile Include="ITransformEngine.cs" />
+    <Compile Include="PdfOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformEngine.cs" />
     <Compile Include="Utils\Guard.cs" />

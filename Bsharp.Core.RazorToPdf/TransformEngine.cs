@@ -2,6 +2,11 @@
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
+using iTextSharp.tool.xml.html;
+using iTextSharp.tool.xml.parser;
+using iTextSharp.tool.xml.pipeline.css;
+using iTextSharp.tool.xml.pipeline.end;
+using iTextSharp.tool.xml.pipeline.html;
 using RazorEngine;
 using RazorEngine.Templating;
 using System.IO;
@@ -13,11 +18,23 @@ namespace BSharp.Core.RazorToPdf
     /// </summary>
     public class TransformEngine : ITransformEngine
     {
+        private PdfOptions _options;
+
         /// <summary>
         /// Create an instance of <see cref="TransformEngine"/>
         /// </summary>
         public TransformEngine()
+            : this(new PdfOptions())
         {
+        }
+
+        /// <summary>
+        /// Create an instance of <see cref="TransformEngine"/> customizing the transformation of pdf
+        /// </summary>
+        /// <param name="options">Represents the customization options to transform pdf</param>
+        public TransformEngine(PdfOptions options)
+        {
+            _options = options;
         }
 
         /// <summary>
@@ -116,11 +133,28 @@ namespace BSharp.Core.RazorToPdf
             }
         }
 
-        private static void ParseXHtml(string html, Document doc, PdfWriter writer)
+        private void ParseXHtml(string content, Document doc, PdfWriter writer)
         {
-            using (var srHtml = new StringReader(html))
+            using (var srHtml = new StringReader(content))
             {
-                XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, srHtml);
+                XMLWorkerHelper xmlWorkerHelper = XMLWorkerHelper.GetInstance();
+
+                ICSSResolver cssResolver = xmlWorkerHelper.GetDefaultCssResolver(true);
+
+                HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
+                htmlContext.SetTagFactory(Tags.GetHtmlTagProcessorFactory());
+                if (_options.ImageTransform != null)
+                {
+                    htmlContext.SetImageProvider(_options.ImageTransform.GetImageProvider());
+                }
+
+                PdfWriterPipeline pdf = new PdfWriterPipeline(doc, writer);
+                HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
+                CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
+
+                XMLWorker worker = new XMLWorker(css, true);
+                XMLParser p = new XMLParser(worker);
+                p.Parse(srHtml);
             }
         }
     }
