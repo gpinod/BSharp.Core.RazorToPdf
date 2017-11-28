@@ -57,3 +57,17 @@ transformEngine.TransformFromFileAndSave(templatePath, "Example4", model, target
 ## Temporary files
 
 Please review the RazorEngine documentation [here](https://github.com/Antaris/RazorEngine#temporary-files), for more details.
+
+## Example including embeded images
+You can include images embeded in base64 using the following instruction:
+```csharp
+using BSharp.Core.RazorToPdf;
+string base64 = "<IMAGE CODING IN BASE64 >";
+string content = "<h3>Hi, @Model.Name</h3><img src=\"@Model.ImageBase64\" />";
+var model = new { Name = "John Smith", ImageBase64 = string.Format(CultureInfo.CurrentCulture, "data:image/png;base64,{0}", base64) };
+string targetPath = @"C:\Demo.pdf";
+ITransformEngine transformEngine = new TransformEngine(new PdfOptions
+            {
+                ImageTransform = new Base64ImageTransform()
+            });
+transformEngine.TransformAndSave(content, "Example3", model, targetPath);
